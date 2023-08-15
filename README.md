@@ -16,3 +16,5 @@ Start the application locally
 ```bash
 ./gradlew bootrun
 ```
+
+*Save this version for testing purpouses
