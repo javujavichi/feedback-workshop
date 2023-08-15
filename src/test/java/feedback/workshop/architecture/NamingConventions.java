@@ -1,8 +1,5 @@
 package feedback.workshop.architecture;
 
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
-import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchIgnore;
 import com.tngtech.archunit.junit.ArchTest;
@@ -10,8 +7,6 @@ import com.tngtech.archunit.junit.ArchUnitRunner;
 import com.tngtech.archunit.lang.ArchRule;
 import org.junit.runner.RunWith;
 import org.springframework.stereotype.*;
-import org.springframework.web.servlet.mvc.AbstractController;
-
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 @RunWith(ArchUnitRunner.class)

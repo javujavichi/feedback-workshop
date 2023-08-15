@@ -1,11 +1,15 @@
 package feedback.workshop.application.controller;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FeedbackRequest {
     private Integer id;
     private String givenBy;
     private String feedback;
 
-    public FeedbackRequest(Integer id, String givenBy, String feedback) {
+    @JsonCreator
+    public FeedbackRequest(@JsonProperty("id") Integer id, @JsonProperty("givenBy") String givenBy, @JsonProperty("feedback") String feedback) {
         this.id = id;
         this.givenBy = givenBy;
         this.feedback = feedback;

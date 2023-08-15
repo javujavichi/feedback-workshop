@@ -16,3 +16,11 @@ Start the application locally
 ```bash
 ./gradlew bootrun
 ```
+
+# Available endpoints 
+```
+POST /feedback: Submit feedback
+GET /feedback: Get all the provided feedback
+GET /feedback/{id}: Get feedback by ID
+GET /feedback?givenBy={givenBy}: Get feedback by givenBy parameter
+```

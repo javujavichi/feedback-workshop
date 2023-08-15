@@ -1,40 +1,72 @@
 package feedback.workshop.application.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import feedback.workshop.application.service.FeedbackService;
-
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import feedback.workshop.application.usecase.GetAllFeedbackUseCase;
+import feedback.workshop.application.usecase.GetFeedbackByIdUseCase;
+import feedback.workshop.application.usecase.GetFeedbackByGivenByUseCase;
+import feedback.workshop.application.usecase.SubmitFeedbackRequest;
+import feedback.workshop.application.usecase.SubmitFeedbackUseCase;
+import feedback.workshop.domain.Feedback;
 
 @RestController
+@RequestMapping("/feedback")
 public class FeedbackController {
-   private final FeedbackService feedbackService;
+    private final SubmitFeedbackUseCase submitFeedbackUseCase;
+    private final GetFeedbackByIdUseCase getFeedbackByIdUseCase;
+    private final GetAllFeedbackUseCase getAllFeedbackUseCase;
+    private final GetFeedbackByGivenByUseCase getFeedbackByGivenByUseCase;
 
-    public FeedbackController(FeedbackService feedbackService) {
-        this.feedbackService = feedbackService;
+    public FeedbackController(SubmitFeedbackUseCase submitFeedbackUseCase,
+            GetFeedbackByIdUseCase getFeedbackByIdUseCase, GetAllFeedbackUseCase getAllFeedbackUseCase,
+            GetFeedbackByGivenByUseCase getFeedbackByGivenByUseCase) {
+        this.submitFeedbackUseCase = submitFeedbackUseCase;
+        this.getFeedbackByIdUseCase = getFeedbackByIdUseCase;
+        this.getAllFeedbackUseCase = getAllFeedbackUseCase;
+        this.getFeedbackByGivenByUseCase = getFeedbackByGivenByUseCase;
+
     }
 
-    @PostMapping("/feedback")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody FeedbackRequest feedbackRequest){
-        this.feedbackService.save(feedbackRequest);
+    @PostMapping
+    public ResponseEntity<FeedbackResponse> submitFeedback(@RequestBody SubmitFeedbackRequest submitFeedbackRequest) {
+        Feedback feedback = submitFeedbackUseCase.submitFeedback(submitFeedbackRequest);
+        FeedbackResponse feedbackResponse = new FeedbackResponse(feedback.getId(), feedback.getGivenBy(),
+                feedback.getFeedback());
+        return ResponseEntity.ok(feedbackResponse);
     }
 
-    @GetMapping("/feedback/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<FeedbackResponse> getById(@PathVariable Integer id){
-        return this.feedbackService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<FeedbackResponse> getFeedbackById(@PathVariable Integer id) {
+        Optional<Feedback> feedbackOptional = getFeedbackByIdUseCase.getFeedbackById(id);
+        if (feedbackOptional.isPresent()) {
+            Feedback feedback = feedbackOptional.get();
+            FeedbackResponse feedbackResponse = FeedbackResponse.fromFeedback(feedback);
+            return ResponseEntity.ok(feedbackResponse);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/feedback")
-    @ResponseStatus(HttpStatus.OK)
-    public List<FeedbackResponse> getByGiven(@RequestParam(required = false) String givenBy){
-        return this.feedbackService.findAllByGivenBy(givenBy);
+    @GetMapping
+    public ResponseEntity<List<FeedbackResponse>> getAllFeedback() {
+        List<Feedback> feedbackList = getAllFeedbackUseCase.getAllFeedback();
+        List<FeedbackResponse> feedbackResponseList = feedbackList.stream()
+                .map(feedback -> new FeedbackResponse(feedback.getId(), feedback.getGivenBy(), feedback.getFeedback()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(feedbackResponseList);
     }
 
-    @GetMapping("/feedback/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<FeedbackResponse> all(){
-        return this.feedbackService.findAll();
+    @GetMapping("/givenBy={givenBy}")
+    public ResponseEntity<List<FeedbackResponse>> getFeedbackByUser(@PathVariable String givenBy) {
+        List<Feedback> feedbackList = getFeedbackByGivenByUseCase.getFeedbackByGivenBy(givenBy);
+        List<FeedbackResponse> feedbackResponseList = feedbackList.stream()
+                .map(feedback -> FeedbackResponse.fromFeedback(feedback))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(feedbackResponseList);
     }
 }

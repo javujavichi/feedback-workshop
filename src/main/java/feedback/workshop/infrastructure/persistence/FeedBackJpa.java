@@ -1,4 +1,4 @@
-package feedback.workshop.application.persistence;
+package feedback.workshop.infrastructure.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

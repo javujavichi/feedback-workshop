@@ -1,23 +1,16 @@
-package feedback.workshop.application.controller;
+package feedback.workshop.application.usecase;
 
-import feedback.workshop.domain.Feedback;
-
-public class FeedbackResponse {
+public class SubmitFeedbackResponse {
     private Integer id;
     private String givenBy;
     private String feedback;
 
-    public FeedbackResponse() {
-    }
+    public SubmitFeedbackResponse() {}
 
-    public FeedbackResponse(Integer id, String givenBy, String feedback) {
+    public SubmitFeedbackResponse(Integer id, String givenBy, String feedback) {
         this.id = id;
         this.givenBy = givenBy;
         this.feedback = feedback;
-    }
-
-    public static FeedbackResponse fromFeedback(Feedback feedback) {
-        return new FeedbackResponse(feedback.getId(), feedback.getGivenBy(), feedback.getFeedback());
     }
 
     public Integer getId() {
