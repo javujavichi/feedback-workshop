@@ -1,11 +1,11 @@
 package feedback.workshop.application.usecase;
 
-import feedback.workshop.domain.Feedback;
-import feedback.workshop.infrastructure.persistence.FeedbackRepository;
-
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import feedback.workshop.application.domain.entity.Feedback;
+import feedback.workshop.application.domain.repository.FeedbackRepository;
 
 @Service
 public class GetFeedbackByIdUseCase {

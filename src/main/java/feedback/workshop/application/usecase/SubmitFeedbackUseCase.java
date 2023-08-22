@@ -2,8 +2,9 @@ package feedback.workshop.application.usecase;
 
 import org.springframework.stereotype.Service;
 
-import feedback.workshop.application.service.FeedbackService;
-import feedback.workshop.domain.Feedback;
+import feedback.workshop.application.domain.entity.Feedback;
+import feedback.workshop.application.domain.service.FeedbackService;
+import feedback.workshop.application.infrastructure.web.model.SubmitFeedbackRequest;
 
 @Service
 public class SubmitFeedbackUseCase {

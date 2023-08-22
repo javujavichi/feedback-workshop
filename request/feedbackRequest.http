@@ -1,5 +1,10 @@
-GET http://localhost:8080/feedback?givenBy=Javiera
+GET http://localhost:8080/feedback/givenBy/Javiera
 Accept: application/json
+
+###
+GET http://localhost:8080/feedback
+Accept: application/json
+###
 
 ###
 GET http://localhost:8080/feedback/all
@@ -14,3 +19,4 @@ Content-Type: application/json
   "givenBy": "Rose",
   "feedback": "Should study more architecture"
 }
+

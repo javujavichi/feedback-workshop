@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import feedback.workshop.domain.Feedback;
-import feedback.workshop.infrastructure.persistence.FeedbackRepository;
+import feedback.workshop.application.domain.entity.Feedback;
+import feedback.workshop.application.domain.repository.FeedbackRepository;
 
 @Service
 public class GetAllFeedbackUseCase {
