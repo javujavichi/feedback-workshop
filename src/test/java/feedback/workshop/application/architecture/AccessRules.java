@@ -19,10 +19,10 @@ public class AccessRules {
 
       .layer("Controllers").definedBy("feedback.workshop.application.infrastructure.web.controller..")
       .layer("Services").definedBy("feedback.workshop.application.domain.service..")
-      .layer("Persistence").definedBy("feedback.workshop.application.infrastructure.persistence..")
+      .layer("UseCases").definedBy("feedback.workshop.application.usecase..")
+      .layer("Repository").definedBy("feedback.workshop.application.domain.repository..")
 
       .whereLayer("Controllers").mayNotBeAccessedByAnyLayer()
-      .whereLayer("Services").mayOnlyBeAccessedByLayers("Controllers")
-      .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Services");
-
+      .whereLayer("Services").mayOnlyBeAccessedByLayers("Controllers", "UseCases")
+      .whereLayer("Repository").mayOnlyBeAccessedByLayers("Services", "UseCases");
 }
