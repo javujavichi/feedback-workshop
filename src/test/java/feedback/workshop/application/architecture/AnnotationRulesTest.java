@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
+import javax.persistence.Entity;
+
 @RunWith(ArchUnitRunner.class)
 @AnalyzeClasses(packages = "feedback.workshop.application")
 public class AnnotationRulesTest {
@@ -31,9 +33,8 @@ public class AnnotationRulesTest {
       .that().areAnnotatedWith(RestController.class)
       .should().resideInAPackage("..infrastructure..");
 
-  @ArchIgnore
   @ArchTest
-  public static ArchRule services_should_located_in_infrastructure = classes()
-      .that().areAnnotatedWith(Service.class)
-      .should().resideInAPackage("..service..");
+  public static ArchRule entities_should_be_located_in_domain = classes()
+      .that().areAnnotatedWith(Entity.class)
+      .should().resideInAPackage("..domain..");
 }
