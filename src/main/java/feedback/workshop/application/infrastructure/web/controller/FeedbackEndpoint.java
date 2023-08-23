@@ -11,20 +11,20 @@ import feedback.workshop.application.domain.entity.Feedback;
 import feedback.workshop.application.infrastructure.web.model.FeedbackResponse;
 import feedback.workshop.application.infrastructure.web.model.SubmitFeedbackRequest;
 import feedback.workshop.application.usecase.GetAllFeedbackUseCase;
-import feedback.workshop.application.usecase.GetFeedbackByIdUseCase;
+import feedback.workshop.application.usecase.GetFeedbackById;
 import feedback.workshop.application.usecase.GetFeedbackByGivenByUseCase;
 import feedback.workshop.application.usecase.SubmitFeedbackUseCase;
 
 @RestController
 @RequestMapping("/feedback")
-public class FeedbackController {
+public class FeedbackEndpoint {
     private final SubmitFeedbackUseCase submitFeedbackUseCase;
-    private final GetFeedbackByIdUseCase getFeedbackByIdUseCase;
+    private final GetFeedbackById getFeedbackByIdUseCase;
     private final GetAllFeedbackUseCase getAllFeedbackUseCase;
     private final GetFeedbackByGivenByUseCase getFeedbackByGivenByUseCase;
 
-    public FeedbackController(SubmitFeedbackUseCase submitFeedbackUseCase,
-            GetFeedbackByIdUseCase getFeedbackByIdUseCase, GetAllFeedbackUseCase getAllFeedbackUseCase,
+    public FeedbackEndpoint(SubmitFeedbackUseCase submitFeedbackUseCase,
+            GetFeedbackById getFeedbackByIdUseCase, GetAllFeedbackUseCase getAllFeedbackUseCase,
             GetFeedbackByGivenByUseCase getFeedbackByGivenByUseCase) {
         this.submitFeedbackUseCase = submitFeedbackUseCase;
         this.getFeedbackByIdUseCase = getFeedbackByIdUseCase;

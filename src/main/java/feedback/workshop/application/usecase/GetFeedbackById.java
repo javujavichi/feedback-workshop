@@ -8,10 +8,10 @@ import feedback.workshop.application.domain.entity.Feedback;
 import feedback.workshop.application.domain.repository.FeedbackRepository;
 
 @Service
-public class GetFeedbackByIdUseCase {
+public class GetFeedbackById {
     private final FeedbackRepository feedbackRepository;
 
-    public GetFeedbackByIdUseCase(FeedbackRepository feedbackRepository) {
+    public GetFeedbackById(FeedbackRepository feedbackRepository) {
         this.feedbackRepository = feedbackRepository;
     }
 
