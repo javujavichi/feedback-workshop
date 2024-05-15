@@ -1,0 +1,46 @@
+# version: '3.8'
+
+# services:
+#   feedback-workshop:
+#     build: .
+#     ports:
+#       - "8080:8080"
+#     environment:
+#       - JAVA_OPTS=-Xmx512m
+#       - MYSQL_PASSWORD=1234!
+#       - MYSQL_USER=1234!
+version: '3.8'
+
+services:
+  feedback-workshop:
+    #image: javi/feedback-workshop:latest # TODO: Utilizar la imagen desde Docker Hub
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    environment:
+      - JAVA_OPTS=-Xmx512m
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=mi_contraseña
+      - DB_NAME=mi_basedatos
+    networks:
+      - my-network
+
+  database:
+    image: mysql:latest # TODO: Cambiar latest por una version estable
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mi_contraseña
+      - MYSQL_DATABASE=mi_basedatos
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
