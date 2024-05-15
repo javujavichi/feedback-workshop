@@ -1,5 +1,5 @@
 # feedback-workshop
-Workshop for SoCraTes Conference to play with arch unit and enforce your architecture using Java
+Workshop for NewCrafts Conference to play with ArchUnit and enforce your architecture using Java Tests
 
 ## Instructions
 
@@ -7,7 +7,7 @@ This project has a few branches to play and work with arch unit, the main idea i
 
 ### Activities in chaos branchs
 
-This section list different activities for the repository. Even when the code is not perfect it pretends to be treated as a real life project that was created by a lot of people collaborating togeather and now need to improve the architecture and organization of the project before adding a new domain.
+This section list different activities for the repository. Even when the code is not perfect it pretends to be treated as a real life project that was created by a lot of people collaborating together and now need to improve the architecture and organization of the project before adding a new domain.
 #### *add-test-chaos*
 
 This branch does not have any tests, helps the user to start with arch unit basic rules
