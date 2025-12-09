@@ -63,3 +63,34 @@ GET /feedback/givenBy/{givenBy}: Get feedback by givenBy parameter
   "feedback": "Should study more architecture"
 }
 ```
+
+## Codespaces
+
+This repository includes a Codespaces devcontainer so contributors can run the app without installing Java or Gradle locally. The devcontainer uses `.devcontainer/Dockerfile` and forwards port `8080`.
+
+Quick start (GitHub Codespaces)
+
+- Open the repository in a Codespace: **Code → Codespaces → New codespace**.
+- Wait for the Codespace container to finish building (the `postCreateCommand` will run `./gradlew --version`).
+- In the Codespace terminal run:
+
+```bash
+chmod +x ./gradlew
+./gradlew bootRun
+```
+
+- Open the **Ports** panel, forward port `8080`, then click **Open in Browser** to view the app.
+
+Troubleshooting
+
+- If the app doesn't start, try building first:
+
+```bash
+./gradlew clean build
+```
+
+- If you need to run locally (not in Codespaces), ensure **Java 11** is installed and `JAVA_HOME` points to it.
+
+Notes
+
+- Codespaces uses the dev-specific `.devcontainer/Dockerfile`. The root `Dockerfile` in the repository is a production-style multi-stage image (used to build a runtime image). You can remove or rename it if you don't need a production image in this repo.
