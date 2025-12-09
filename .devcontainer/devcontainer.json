@@ -1,7 +1,7 @@
 {
   "name": "feedback-workshop (Java 11 - custom)",
   "build": {
-    "dockerfile": ".devcontainer/Dockerfile",
+    "dockerfile": "Dockerfile",
     "context": ".."
   },
   "forwardPorts": [8080],
