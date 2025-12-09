@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feedback Workshop</title>
+  <style>
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 24px; background:#f6f8fa; }
+    h1 { margin-top:0 }
+    .card { background: #fff; border-radius:8px; padding:16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom:16px }
+    label { display:block; margin:8px 0 4px }
+    input[type=text], textarea { width:100%; padding:8px; border:1px solid #ddd; border-radius:6px }
+    button { margin-top:8px; padding:8px 12px; border-radius:6px; border:0; background:#0366d6; color:#fff }
+    .list-item { padding:8px 0; border-bottom:1px solid #eee }
+    .muted { color:#666; font-size:0.9em }
+    .row { display:flex; gap:12px }
+    .col { flex:1 }
+    .small { width:160px }
+    .inline { display:inline-block }
+  </style>
+</head>
+<body>
+  <h1>Feedback Workshop</h1>
+
+  <div class="card">
+    <strong>Submit feedback</strong>
+    <div style="margin-top:8px">
+      <label for="givenBy">Given by</label>
+      <input id="givenBy" type="text" placeholder="Your name" />
+      <label for="feedback">Feedback</label>
+      <textarea id="feedback" rows="3" placeholder="Your feedback"></textarea>
+      <button id="submitBtn">Submit</button>
+      <div id="submitMsg" class="muted" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <strong>Explore feedback</strong>
+    <div style="margin-top:8px">
+      <div class="row">
+        <div class="col">
+          <label for="all">All feedback</label>
+          <div id="allList" style="min-height:40px"></div>
+        </div>
+        <div class="col small">
+          <label for="byId">By ID</label>
+          <input id="byId" type="text" placeholder="id" />
+          <button id="getByIdBtn" class="inline">Get</button>
+          <div id="byIdResult" class="muted" style="margin-top:8px"></div>
+        </div>
+        <div class="col small">
+          <label for="byGiven">By GivenBy</label>
+          <input id="byGiven" type="text" placeholder="givenBy" />
+          <button id="getByGivenBtn" class="inline">Get</button>
+          <div id="byGivenResult" class="muted" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const api = {
+      list: () => fetch('/feedback').then(r => r.json()),
+      post: payload => fetch('/feedback', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(payload) }).then(r=>r.json()),
+      getById: id => fetch('/feedback/' + encodeURIComponent(id)).then(r => r.json()),
+      getByGiven: g => fetch('/feedback/givenBy/' + encodeURIComponent(g)).then(r => r.json())
+    }
+
+    const allList = document.getElementById('allList')
+    const submitBtn = document.getElementById('submitBtn')
+    const submitMsg = document.getElementById('submitMsg')
+
+    function renderList(items){
+      if(!items || items.length === 0) { allList.innerHTML = '<div class="muted">No feedback yet</div>'; return }
+      allList.innerHTML = items.map(i=>`<div class="list-item"><strong>${i.givenBy}</strong> <span class="muted">(#${i.id})</span><div>${escapeHtml(i.feedback)}</div></div>`).join('')
+    }
+
+    function escapeHtml(str){ return (str||'').replace(/[&<>\"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])) }
+
+    async function refresh(){
+      try{
+        const data = await api.list()
+        renderList(Array.isArray(data)?data:[])
+      }catch(e){ allList.innerHTML = '<div class="muted">Failed to load</div>' }
+    }
+
+    submitBtn.addEventListener('click', async ()=>{
+      const givenBy = document.getElementById('givenBy').value.trim()
+      const feedback = document.getElementById('feedback').value.trim()
+      if(!givenBy || !feedback){ submitMsg.textContent = 'Please fill both fields'; return }
+      submitMsg.textContent = 'Submitting...'
+      try{
+        // id is optional; server will assign if not provided
+        await api.post({ givenBy, feedback })
+        submitMsg.textContent = 'Submitted ✓'
+        document.getElementById('givenBy').value = ''
+        document.getElementById('feedback').value = ''
+        refresh()
+      }catch(e){ submitMsg.textContent = 'Submit failed' }
+      setTimeout(()=>submitMsg.textContent = '', 3000)
+    })
+
+    document.getElementById('getByIdBtn').addEventListener('click', async ()=>{
+      const id = document.getElementById('byId').value.trim()
+      if(!id) return document.getElementById('byIdResult').textContent = 'Enter an id'
+      try{
+        const r = await api.getById(id)
+        document.getElementById('byIdResult').textContent = JSON.stringify(r)
+      }catch(e){ document.getElementById('byIdResult').textContent = 'Not found' }
+    })
+
+    document.getElementById('getByGivenBtn').addEventListener('click', async ()=>{
+      const g = document.getElementById('byGiven').value.trim()
+      if(!g) return document.getElementById('byGivenResult').textContent = 'Enter a name'
+      try{
+        const r = await api.getByGiven(g)
+        document.getElementById('byGivenResult').textContent = JSON.stringify(r)
+      }catch(e){ document.getElementById('byGivenResult').textContent = 'Not found' }
+    })
+
+    // initial load
+    refresh()
+  </script>
+</body>
+</html>
