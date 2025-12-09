@@ -94,3 +94,35 @@ Troubleshooting
 Notes
 
 - Codespaces uses the dev-specific `.devcontainer/Dockerfile`. The root `Dockerfile` in the repository is a production-style multi-stage image (used to build a runtime image). You can remove or rename it if you don't need a production image in this repo.
+
+Run with Docker (no Java/Gradle install required)
+
+Build and run with Docker directly:
+
+```bash
+# build the image
+docker build -t feedback-workshop:latest .
+
+# run the container and forward port 8080
+docker run --rm -p 8080:8080 feedback-workshop:latest
+```
+
+Or use docker-compose (preferred for contributors):
+
+```bash
+# build and run in foreground
+docker-compose up --build
+
+# or run detached
+docker-compose up --build -d
+
+# stop and remove
+docker-compose down
+```
+
+If you publish the image to a registry (GitHub Container Registry or Docker Hub), contributors can skip the build step and run the image directly:
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/<OWNER>/feedback-workshop:latest
+```
+

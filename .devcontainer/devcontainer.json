@@ -1,7 +1,7 @@
 {
   "name": "feedback-workshop (Java 11 - custom)",
   "build": {
-    "dockerfile": "Dockerfile",
+    "dockerfile": ".devcontainer/Dockerfile",
     "context": ".."
   },
   "forwardPorts": [8080],
@@ -12,8 +12,6 @@
     "pivotal.vscode-boot-dev-pack",
     "richardwillis.vscode-gradle"
   ],
-  "containerEnv": {
-    "JAVA_HOME": "/usr/lib/jvm/java-11-openjdk-amd64"
-  },
+  
   "remoteUser": "vscode"
 }
