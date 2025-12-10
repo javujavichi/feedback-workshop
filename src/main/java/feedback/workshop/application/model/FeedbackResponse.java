@@ -1,4 +1,4 @@
-package feedback.workshop.application.infrastructure.web.model;
+package feedback.workshop.application.model;
 
 import feedback.workshop.application.domain.entity.Feedback;
 

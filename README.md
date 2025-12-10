@@ -13,7 +13,19 @@ This section list different activities for the repository. Even when the code is
 This branch does not have any tests, helps the user to start with arch unit basic rules
 
 #### *refactor-organization-chaos*
-This branch does have the test, but also is unorganized and to solve the mistery you need to place the files in the correct folders to pass the tests
+
+**📦 Package Organization Challenge**
+
+This branch has all the tests, but the code is poorly organized! Classes have been moved to incorrect packages, violating clean architecture principles.
+
+**Your mission:** Move the files to their correct packages to make all tests pass.
+
+**📖 See the full challenge:** [ARCHITECTURE-CHALLENGE.md](./ARCHITECTURE-CHALLENGE.md)
+
+**What you'll learn:**
+- Proper package organization following clean architecture
+- The relationship between architectural layers
+- How to use test failures as guides for refactoring
 
 #### ...more branches to come...
 

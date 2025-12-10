@@ -1,4 +1,4 @@
-package feedback.workshop.application.infrastructure.web.controller;
+package feedback.workshop.application.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import feedback.workshop.application.domain.entity.Feedback;
-import feedback.workshop.application.infrastructure.web.model.FeedbackResponse;
-import feedback.workshop.application.infrastructure.web.model.SubmitFeedbackRequest;
-import feedback.workshop.application.usecase.GetAllFeedbackUseCase;
-import feedback.workshop.application.usecase.GetFeedbackByIdUseCase;
+import feedback.workshop.application.model.FeedbackResponse;
+import feedback.workshop.application.model.SubmitFeedbackRequest;
+import feedback.workshop.application.service.GetAllFeedbackUseCase;
+import feedback.workshop.application.service.GetFeedbackByIdUseCase;
 import feedback.workshop.application.usecase.GetFeedbackByGivenByUseCase;
-import feedback.workshop.application.usecase.SubmitFeedbackUseCase;
+import feedback.workshop.application.service.SubmitFeedbackUseCase;
 
 @RestController
 @RequestMapping("/feedback")
@@ -35,7 +35,9 @@ public class FeedbackController {
 
     @PostMapping
     public ResponseEntity<FeedbackResponse> submitFeedback(@RequestBody SubmitFeedbackRequest submitFeedbackRequest) {
-        Feedback feedback = submitFeedbackUseCase.submitFeedback(submitFeedbackRequest);
+        Feedback feedback = submitFeedbackUseCase.submitFeedback(
+            submitFeedbackRequest.getGivenBy(), 
+            submitFeedbackRequest.getFeedback());
         FeedbackResponse feedbackResponse 
         = new FeedbackResponse(
             feedback.getId(), 

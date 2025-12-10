@@ -1,4 +1,4 @@
-package feedback.workshop.application.domain.service;
+package feedback.workshop.application.usecase.impl;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import feedback.workshop.application.domain.repository.FeedbackRepository;
 import feedback.workshop.application.usecase.GetFeedbackByGivenByUseCase;
 
 @Service
-public class GetFeedbackByGivenByUseCaseImplService implements GetFeedbackByGivenByUseCase {
+public class GetFeedbackByGivenByUseCaseImplUseCase implements GetFeedbackByGivenByUseCase {
     private final FeedbackRepository feedbackRepository;
 
-    public GetFeedbackByGivenByUseCaseImplService(FeedbackRepository feedbackRepository) {
+    public GetFeedbackByGivenByUseCaseImplUseCase(FeedbackRepository feedbackRepository) {
         this.feedbackRepository = feedbackRepository;
     }
 

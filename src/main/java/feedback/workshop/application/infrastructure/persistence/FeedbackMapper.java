@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import feedback.workshop.application.domain.entity.Feedback;
-import feedback.workshop.application.infrastructure.web.model.FeedbackRequest;
-import feedback.workshop.application.infrastructure.web.model.SubmitFeedbackResponse;
+import feedback.workshop.application.model.FeedbackRequest;
+import feedback.workshop.application.model.SubmitFeedbackResponse;
 
 @Component
 public class FeedbackMapper {
