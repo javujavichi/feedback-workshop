@@ -63,3 +63,66 @@ GET /feedback/givenBy/{givenBy}: Get feedback by givenBy parameter
   "feedback": "Should study more architecture"
 }
 ```
+
+## Codespaces
+
+This repository includes a Codespaces devcontainer so contributors can run the app without installing Java or Gradle locally. The devcontainer uses `.devcontainer/Dockerfile` and forwards port `8080`.
+
+Quick start (GitHub Codespaces)
+
+- Open the repository in a Codespace: **Code → Codespaces → New codespace**.
+- Wait for the Codespace container to finish building (the `postCreateCommand` will run `./gradlew --version`).
+- In the Codespace terminal run:
+
+```bash
+chmod +x ./gradlew
+./gradlew bootRun
+```
+
+- Open the **Ports** panel, forward port `8080`, then click **Open in Browser** to view the app.
+
+Troubleshooting
+
+- If the app doesn't start, try building first:
+
+```bash
+./gradlew clean build
+```
+
+- If you need to run locally (not in Codespaces), ensure **Java 11** is installed and `JAVA_HOME` points to it.
+
+Notes
+
+- Codespaces uses the dev-specific `.devcontainer/Dockerfile`. The root `Dockerfile` in the repository is a production-style multi-stage image (used to build a runtime image). You can remove or rename it if you don't need a production image in this repo.
+
+Run with Docker (no Java/Gradle install required)
+
+Build and run with Docker directly:
+
+```bash
+# build the image
+docker build -t feedback-workshop:latest .
+
+# run the container and forward port 8080
+docker run --rm -p 8080:8080 feedback-workshop:latest
+```
+
+Or use docker-compose (preferred for contributors):
+
+```bash
+# build and run in foreground
+docker-compose up --build
+
+# or run detached
+docker-compose up --build -d
+
+# stop and remove
+docker-compose down
+```
+
+If you publish the image to a registry (GitHub Container Registry or Docker Hub), contributors can skip the build step and run the image directly:
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/<OWNER>/feedback-workshop:latest
+```
+
