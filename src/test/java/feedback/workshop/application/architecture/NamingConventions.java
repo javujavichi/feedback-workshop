@@ -29,4 +29,9 @@ public class NamingConventions {
       .that().resideInAPackage("..usecase..")
       .should().haveSimpleNameEndingWith("UseCase");
 
+  @ArchTest
+  public static ArchRule repositories_should_be_suffixed = classes()
+      .that().resideInAPackage("..repository..")
+      .should().haveSimpleNameEndingWith("Repository");
+
 }

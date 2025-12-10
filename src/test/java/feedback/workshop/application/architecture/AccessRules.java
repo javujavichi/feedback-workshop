@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import com.tngtech.archunit.lang.ArchRule;
 
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @RunWith(ArchUnitRunner.class)
 @AnalyzeClasses(packages = "feedback.workshop.application")
