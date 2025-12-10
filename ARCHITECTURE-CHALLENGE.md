@@ -6,7 +6,7 @@ Welcome to the **refactor-organization-chaos** branch! This exercise will test y
 
 ## 🚨 The Problem
 
-A junior developer has been reorganizing the codebase, but they've moved classes to incorrect packages! The application compiles and runs, but when you run the architecture tests, you'll discover that many classes violate the architectural rules.
+A new developer in the team has been reorganizing the codebase, but they've moved classes to incorrect packages! The application compiles and runs, but when you run the architecture tests, you'll discover that many classes violate the architectural rules.
 
 Your mission: **Move the classes to their correct packages** so all architecture tests pass.
 
@@ -139,7 +139,7 @@ When you've successfully completed the challenge:
 - [ArchUnit User Guide](https://www.archunit.org/userguide/html/000_Index.html)
 - [Package by Feature vs Package by Layer](https://phauer.com/2020/package-by-feature/)
 
-## 🎓 Learning Objectives
+## Learning Goals
 
 After completing this challenge, you should understand:
 
@@ -151,6 +151,9 @@ After completing this challenge, you should understand:
 
 ---
 
-**Good luck!** 🚀
+**Good luck!** 
 
 If you get stuck, remember: The test failures are your guide. Read them carefully - they tell you exactly what's wrong and where!
+
+
+@Made with ❤️ by Javiera Laso
