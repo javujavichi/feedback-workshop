@@ -215,3 +215,4 @@ If you publish the image to a registry (GitHub Container Registry or Docker Hub)
 docker run --rm -p 8080:8080 ghcr.io/<OWNER>/feedback-workshop:latest
 ```
 
+@Made with ❤️ by Javiera Laso
