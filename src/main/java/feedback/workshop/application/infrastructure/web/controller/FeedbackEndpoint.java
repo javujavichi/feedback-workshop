@@ -35,7 +35,9 @@ public class FeedbackEndpoint {
 
     @PostMapping
     public ResponseEntity<FeedbackResponse> submitFeedback(@RequestBody SubmitFeedbackRequest submitFeedbackRequest) {
-        Feedback feedback = submitFeedbackUseCase.submitFeedback(submitFeedbackRequest);
+        Feedback feedback = submitFeedbackUseCase.submitFeedback(
+            submitFeedbackRequest.getGivenBy(), 
+            submitFeedbackRequest.getFeedback());
         FeedbackResponse feedbackResponse 
         = new FeedbackResponse(
             feedback.getId(), 

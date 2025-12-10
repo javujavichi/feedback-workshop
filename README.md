@@ -1,5 +1,5 @@
 # feedback-workshop
-Workshop for NewCrafts Conference to play with ArchUnit and enforce your architecture using Java Tests
+Workshop to play with ArchUnit and enforce your architecture using Java Tests
 
 ## Instructions
 
@@ -9,7 +9,42 @@ This section lists different activities for the repository. Even when the code i
 
 #### *add-test-chaos*
 
-This branch does not have any tests, helps the user to start with arch unit basic rules
+This branch does not have any tests. Your mission is to add ArchUnit tests to enforce architectural rules and discover the violations in the codebase.
+
+**Goals:**
+1. Add ArchUnit dependency to `build.gradle` if not present
+2. Create architecture tests in `src/test/java/feedback/workshop/application/architecture/`
+3. Implement the following test classes:
+
+**NamingConventions.java** - Enforce naming standards:
+- Controllers should be suffixed with "Controller"
+- Services should be suffixed with "Service"
+- UseCases should be suffixed with "UseCase"
+- Repositories should be suffixed with "Repository"
+- Hint: Use `classes().that().resideInAPackage()` and `.should().haveSimpleNameEndingWith()`
+
+**AccessRules.java** - Define layered architecture:
+- Use `layeredArchitecture()` to define layers: Controllers, Services, UseCases, Repository
+- Controllers should not be accessed by any layer
+- Services should only be accessed by Controllers and UseCases
+- Repository should only be accessed by Services and UseCases
+- Hint: Use `whereLayer().mayOnlyBeAccessedByLayers()`
+
+**PackageCycleTest.java** - Detect circular dependencies:
+- Ensure no cycles exist between packages
+- Use `SlicesRuleDefinition.slices().matching()` to check packages
+- Hint: `.should().beFreeOfCycles()`
+
+**AnnotationRulesTest.java** - Validate Spring annotations:
+- Classes in controller package should be annotated with `@RestController`
+- Classes in service package should be annotated with `@Service`
+- Repositories should extend `JpaRepository` or be annotated with `@Repository`
+
+**Expected outcome:** Your tests will fail! That's the point - they reveal architectural violations that need to be discussed and potentially fixed.
+
+**Resources:**
+- [ArchUnit User Guide](https://www.archunit.org/userguide/html/000_Index.html)
+- [ArchUnit Examples](https://github.com/TNG/ArchUnit-Examples)
 
 #### *refactor-organization-chaos*
 
@@ -19,18 +54,115 @@ This branch does have the test, but also is unorganized and to solve the mystery
 
 
 ## Set up your environment
-To work in this project you'll need **Java SDK 11** and **gradle** to configure it.
-You can use https://sdkman.io/ to configure java sdk and gradle
 
-### install gradle
+There are two ways to run this project: **using Docker (easiest)** or **installing Java locally (for development)**.
+
+---
+
+### Option 1: Docker (Recommended for Workshop Participants)
+
+**No Java installation required!** Just install Docker and you're ready to go.
+
+#### Prerequisites
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
+  - **macOS/Windows**: Download and install Docker Desktop
+  - **Linux**: Install Docker Engine via your package manager
+
+#### Run the application
 ```bash
+# Build and start the application
+docker-compose up --build
+
+# Or run detached (in background)
+docker-compose up --build -d
+
+# Stop the application
+docker-compose down
+```
+
+The application will be available at `http://localhost:8080`
+
+**Pros:**
+- ✅ No Java installation needed
+- ✅ Works identically on all operating systems
+- ✅ Isolated environment (no conflicts)
+- ✅ Single command to get started
+
+**Cons:**
+- ⚠️ Requires Docker Desktop
+- ⚠️ Slightly slower startup
+
+---
+
+### Option 2: Local Java Installation (Recommended for Development)
+
+Install Java directly on your machine for faster iteration and debugging.
+
+#### Quick Setup with Makefile
+
+```bash
+# See all available commands
+make help
+
+# Auto-detect your OS and install dependencies
+make setup
+```
+
+The `make setup` command will:
+- **macOS**: Install Homebrew (if needed) and OpenJDK 11
+- **Linux**: Use apt/yum to install OpenJDK 11
+- **Windows**: Display installation instructions (Chocolatey, manual, or Docker)
+
+After setup, apply environment changes:
+```bash
+# macOS/zsh
+source ~/.zshrc
+
+# Linux/bash
+source ~/.bashrc
+```
+
+#### Run the application
+```bash
+make build              # Build the project
+make run                # Start the application
+make test               # Run all tests
+make test-architecture  # Run architecture tests only
+make clean              # Clean build artifacts
+```
+
+Or use Gradle directly:
+```bash
+./gradlew bootRun       # Start the application
+./gradlew build         # Build the project
+./gradlew test          # Run tests
+```
+
+**Pros:**
+- ✅ Faster startup and iteration
+- ✅ Better for active development
+- ✅ Native debugging support
+
+**Cons:**
+- ⚠️ Requires Java 11 installation
+- ⚠️ Different setup per OS
+
+#### Manual Setup (Alternative)
+If you prefer manual installation, you can use [SDKMAN](https://sdkman.io/):
+
+```bash
+# Install SDKMAN
+curl -s "https://get.sdkman.io" | bash
+
+# Install Java 11 and Gradle 6.4
+sdk install java 11.0.12-open
 sdk install gradle 6.4
 ```
 
-### For VSCode development
-#### Extensions to work with Java (optional)
+---
 
-This are the extentions that I have in my VSCode
+### For VSCode development
+#### Recommended Extensions
 
 - Debugger for Java
 - Extension Pack for Java
@@ -38,13 +170,6 @@ This are the extentions that I have in my VSCode
 - Language Support for Java(TM) by Red Hat
 - Project Manager for Java
 - Test Runner for Java
-
-## Running the application locally
-Start the application locally
-
-```bash
-./gradlew bootrun
-```
 
 # Available endpoints 
 ```
