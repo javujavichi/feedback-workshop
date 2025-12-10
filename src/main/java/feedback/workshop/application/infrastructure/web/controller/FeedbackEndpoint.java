@@ -65,7 +65,7 @@ public class FeedbackEndpoint {
         return ResponseEntity.ok(feedbackResponseList);
     }
 
-    @GetMapping("/givenBy={givenBy}")
+    @GetMapping("/givenBy/{givenBy}")
     public ResponseEntity<List<FeedbackResponse>> getFeedbackByUser(@PathVariable String givenBy) {
         List<Feedback> feedbackList = getFeedbackByGivenByUseCase.getFeedbackByGivenBy(givenBy);
         List<FeedbackResponse> feedbackResponseList = feedbackList.stream()

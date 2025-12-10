@@ -18,6 +18,7 @@ public class GetFeedbackByGivenByUseCaseImplService implements GetFeedbackByGive
 
     @Override
     public List<Feedback> getFeedbackByGivenBy(String givenBy) {
-        return feedbackRepository.findByGivenBy(givenBy);
+        if (givenBy == null) return List.of();
+        return feedbackRepository.findByGivenByIgnoreCase(givenBy);
     }
 }
